@@ -1,0 +1,15 @@
+{
+  "name": "synthetic_continuous_endpoint_demo",
+  "n_per_arm": 120,
+  "true_effect": 0.3,
+  "endpoint_sd": 1.0,
+  "alpha": 0.05,
+  "allocation_ratio": 1.0,
+  "dropout_rate": 0.1,
+  "nonadherence_rate": 0.05,
+  "recruitment_months": 12,
+  "site_heterogeneity_sd": 0.1,
+  "missingness_mechanism": "MCAR",
+  "n_simulations": 2000,
+  "seed": 42
+}
