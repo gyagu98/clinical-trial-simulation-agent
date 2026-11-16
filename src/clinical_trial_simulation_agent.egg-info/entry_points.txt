@@ -1,2 +1,0 @@
-[console_scripts]
-trial-sim = trial_sim.cli:main

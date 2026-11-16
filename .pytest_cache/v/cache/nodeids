@@ -1,9 +1,0 @@
-[
-  "tests/test_protocol_extract.py::test_extracts_candidate_values_with_evidence",
-  "tests/test_protocol_extract.py::test_no_guessing_when_text_has_no_values",
-  "tests/test_protocol_extract.py::test_review_packet_blocks_unreviewed_execution",
-  "tests/test_simulation.py::test_assumptions_are_returned",
-  "tests/test_simulation.py::test_invalid_dropout_rejected",
-  "tests/test_simulation.py::test_large_effect_has_higher_power_than_null",
-  "tests/test_simulation.py::test_simulation_reproducible"
-]
