@@ -109,3 +109,30 @@ Developed as a portfolio project to demonstrate reproducible statistical program
 ## License
 
 MIT. See [LICENSE](LICENSE).
+
+## Generate a reproducible HTML report
+
+Every simulation creates both a machine-readable JSON result and a self-contained HTML report with scenario assumptions, empirical power and Monte Carlo uncertainty, planned and retained sample-size/dropout summaries, and sensitivity plots for effect size, sample size, and dropout rate. The report embeds its plot as a base64 image and records the UTC generation time and random seed.
+
+```bash
+trial-sim simulate \
+  --name demonstration \
+  --n-per-arm 120 \
+  --effect 0.3 \
+  --sd 1.0 \
+  --dropout 0.10 \
+  --n-simulations 2000 \
+  --seed 42 \
+  --out results/demo_simulation.json \
+  --report results/demo_report.html
+```
+
+Generate a report later from an existing simulation result:
+
+```bash
+trial-sim report \
+  --result results/demo_simulation.json \
+  --out results/demo_report.html
+```
+
+By default the report is saved beside the JSON file with an `.html` extension; `--report` overrides that path. For faster report generation, `--no-sensitivity` skips the sensitivity simulations and plots. Each sensitivity scenario uses the configured deterministic random seed; generating the report does not alter the original JSON simulation output. All generated reports include a prominent research-prototype disclaimer. They are not validated for clinical, medical, or regulatory decisions.
