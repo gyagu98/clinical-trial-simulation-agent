@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import asdict, dataclass, field
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any
 
 import numpy as np
 
@@ -56,11 +56,11 @@ class SubjectPKPDProfile:
     cl_ind: float
     vc_ind: float
     ka_ind: float
-    time_hours: List[float]
-    conc_central_mg_l: List[float]
-    conc_peripheral_mg_l: List[float]
-    biomarker_response: List[float]
-    target_engagement_pct: List[float]
+    time_hours: list[float]
+    conc_central_mg_l: list[float]
+    conc_peripheral_mg_l: list[float]
+    biomarker_response: list[float]
+    target_engagement_pct: list[float]
     cmax_ss: float
     ctrough_ss: float
     auc_tau: float
@@ -71,30 +71,30 @@ class SubjectPKPDProfile:
 @dataclass
 class PopulationPKPDResult:
     """Aggregated population simulation results and exposure statistics."""
-    parameters_pk: Dict[str, Any]
-    parameters_pd: Dict[str, Any]
-    regimen: Dict[str, Any]
+    parameters_pk: dict[str, Any]
+    parameters_pd: dict[str, Any]
+    regimen: dict[str, Any]
     n_subjects: int
-    time_grid: List[float]
+    time_grid: list[float]
     
     # Summary PK percentiles (mg/L) across time
-    median_conc: List[float]
-    p05_conc: List[float]
-    p95_conc: List[float]
+    median_conc: list[float]
+    p05_conc: list[float]
+    p95_conc: list[float]
     
     # Summary PD target engagement (%) across time
-    median_target_engagement: List[float]
-    p05_target_engagement: List[float]
-    p95_target_engagement: List[float]
+    median_target_engagement: list[float]
+    p05_target_engagement: list[float]
+    p95_target_engagement: list[float]
     
     # Key exposure metrics (mean +- std and median [IQR])
-    metrics: Dict[str, Dict[str, float]]
+    metrics: dict[str, dict[str, float]]
     
     # Representative individual subject profiles (first 5 subjects for plotting)
-    individual_profiles: List[SubjectPKPDProfile] = field(default_factory=list)
+    individual_profiles: list[SubjectPKPDProfile] = field(default_factory=list)
 
 
-def _micro_rate_constants(cl: float, vc: float, q: float, vp: float) -> Tuple[float, float, float, float, float]:
+def _micro_rate_constants(cl: float, vc: float, q: float, vp: float) -> tuple[float, float, float, float, float]:
     """Calculate micro rate constants and hybrid exponential disposition constants."""
     k10 = cl / vc
     k12 = q / vc
@@ -125,7 +125,7 @@ def simulate_subject_pkpd(
     time_points: np.ndarray,
 ) -> SubjectPKPDProfile:
     """Simulate time-course PK and PD for a single patient using analytical multi-dose equations."""
-    k10, k12, k21, alpha, beta = _micro_rate_constants(cl, vc, q, vp)
+    _k10, k12, k21, alpha, beta = _micro_rate_constants(cl, vc, q, vp)
     dose = regimen.dose_mg * (bioavailability if regimen.route == "oral" else 1.0)
     tau = regimen.interval_hours
     n_doses = regimen.num_doses
@@ -229,9 +229,9 @@ def simulate_subject_pkpd(
 
 
 def simulate_population_pkpd(
-    pk_params: Optional[PKParameters] = None,
-    pd_params: Optional[PDParameters] = None,
-    regimen: Optional[DosingRegimen] = None,
+    pk_params: PKParameters | None = None,
+    pd_params: PDParameters | None = None,
+    regimen: DosingRegimen | None = None,
     n_subjects: int = 100,
     seed: int = 42,
     time_step_hours: float = 0.25,
@@ -264,7 +264,7 @@ def simulate_population_pkpd(
     auc_list = []
     tmax_list = []
     time_above_list = []
-    profiles: List[SubjectPKPDProfile] = []
+    profiles: list[SubjectPKPDProfile] = []
     
     for i in range(n_subjects):
         prof = simulate_subject_pkpd(
@@ -300,7 +300,7 @@ def simulate_population_pkpd(
     p05_te = np.percentile(all_te, 5, axis=0).tolist()
     p95_te = np.percentile(all_te, 95, axis=0).tolist()
     
-    def _stats(arr: List[float]) -> Dict[str, float]:
+    def _stats(arr: list[float]) -> dict[str, float]:
         a = np.array(arr)
         return {
             "mean": float(np.mean(a)),

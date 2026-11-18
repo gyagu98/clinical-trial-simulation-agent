@@ -4,12 +4,11 @@ from __future__ import annotations
 
 import base64
 import html
-import json
 from datetime import datetime, timezone
 from io import BytesIO
-from typing import Any, Dict, List
 
 import matplotlib
+
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np

@@ -13,11 +13,11 @@ from .simulation.scenarios import TrialScenario
 __version__ = "0.2.0"
 
 __all__ = [
-    "TrialScenario",
-    "simulate_trial",
-    "PKParameters",
-    "PDParameters",
     "DosingRegimen",
+    "PDParameters",
+    "PKParameters",
     "PopulationPKPDResult",
+    "TrialScenario",
     "simulate_population_pkpd",
+    "simulate_trial",
 ]
