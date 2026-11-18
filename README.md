@@ -1,6 +1,6 @@
 # Clinical Trial Simulation & Agentic Assumption Review
 
-A transparent, reproducible research prototype for **Monte Carlo trial design simulation** and **human-reviewed extraction of candidate assumptions from protocol text**. It is tailored to the clinical-trial simulation and AI-assisted workflow priorities in the two Boehringer Ingelheim gBDS / Med Data-AI job descriptions (IDs 38743 and 31802).
+A transparent, reproducible research prototype for **Monte Carlo trial design simulation**, **human-reviewed extraction of candidate assumptions from protocol text**, and **two-compartment population pharmacokinetics/pharmacodynamics (PK/PD) modeling**. It directly addresses the quantitative methodologies in Boehringer Ingelheim's Postdoctoral Fellowships across **gBDS / Med Data-AI** (Job IDs 38743 & 31802) and **Clinical Pharmacology & Pharmacometrics** (Job ID 36490).
 
 > **Important scope:** This repository uses synthetic data only. It is a portfolio/teaching prototype, not a validated clinical, statistical, regulatory, or medical decision tool. Extracted assumptions are candidates for qualified human review, not approved model inputs. Do not use outputs to plan or operate a real clinical trial.
 
@@ -136,3 +136,26 @@ trial-sim report \
 ```
 
 By default the report is saved beside the JSON file with an `.html` extension; `--report` overrides that path. For faster report generation, `--no-sensitivity` skips the sensitivity simulations and plots. Each sensitivity scenario uses the configured deterministic random seed; generating the report does not alter the original JSON simulation output. All generated reports include a prominent research-prototype disclaimer. They are not validated for clinical, medical, or regulatory decisions.
+
+
+## Pharmacometrics & Population PK/PD Modeling (Targets Job 36490)
+
+To support translational clinical pharmacology and exposure-response modeling,  includes an analytical two-compartment population PK/PD simulation engine with log-normal inter-individual variability (IIV) and sigmoidal {max}$ / Hill target engagement:
+
+### Structural Framework
+
+1. **Two-Compartment PK Disposition:**
+   2151rac{dA_c}{dt} = k_a A_a - \left(rac{CL}{V_c} + rac{Q}{V_c}ight) A_c + rac{Q}{V_p} A_p2151
+   2151rac{dA_p}{dt} = rac{Q}{V_c} A_c - rac{Q}{V_p} A_p2151
+2. **Inter-Individual Variability (IIV):**
+   2151CL_i = CL_{	ext{pop}} \cdot \exp(\eta_{CL, i}), \quad V_{c, i} = V_{c, 	ext{pop}} \cdot \exp(\eta_{V_c, i}), \quad \eta \sim \mathcal{N}(0, \omega^2)2151
+3. **Sigmoidal {max}$ / Hill Target Engagement:**
+   2151	ext{Target Engagement } (\%) = 100 	imes rac{C_c(t)^\gamma}{EC_{50}^\gamma + C_c(t)^\gamma}2151
+
+### Run a Population PK/PD Simulation
+
+
+
+### Outputs & Metrics
+- **JSON Output:** Serialized population statistics for steady-state exposure metrics: {\max, ss}$, {	ext{trough}, ss}$, {0-	au}$, {\max}$, and percentage time above {90}$.
+- **Interactive HTML Report:** Self-contained document containing high-DPI dual-panel figures showing median concentrations, 90% population prediction bands (P05–P95), individual subject spaghetti curves, and biomarker target coverage curves.

@@ -1,0 +1,21 @@
+{
+  "name": "oncology_small_molecule_oral_qd_pkpd",
+  "dose_mg": 100.0,
+  "route": "oral",
+  "interval_hours": 24.0,
+  "num_doses": 14,
+  "n_subjects": 100,
+  "cl_l_per_h": 5.0,
+  "vc_l": 20.0,
+  "q_l_per_h": 8.0,
+  "vp_l": 40.0,
+  "ka_per_h": 1.2,
+  "bioavailability": 0.85,
+  "omega_cl_cv_pct": 25.0,
+  "omega_vc_cv_pct": 20.0,
+  "omega_ka_cv_pct": 30.0,
+  "emax_target_inhibition_pct": 95.0,
+  "ec50_mg_per_l": 1.5,
+  "gamma_hill_coefficient": 1.5,
+  "seed": 42
+}
